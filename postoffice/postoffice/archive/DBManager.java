@@ -13,11 +13,27 @@ public class DBManager {
 
 	private static Connection connetion;
 
-	public static Connection getConnection() throws SQLException {
-		if (connetion == null) {
-			connetion = DriverManager.getConnection(URL, USER, PASSWORD);
+	public DBManager() {
+		// load driver
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			System.out.println("Sorry, Driver not loaded or does not exist! Aborting.");
 		}
-
-		return connetion;
+		System.out.println("Driver loaded");
+		// Create connection
+		try {
+			connection = DriverManager.getConnection("jdbc:mysql://" + DB_IP + ":" + DB_PORT + "/" + DB_NAME + "?" +DB_USE_SSL ,DB_USER,
+					DB_PASSWORD);
+ 
+		} catch (SQLException e) {
+			System.out.println("Sorry, connection failed. Maybe wrong credetials?");
+			System.out.println(e.getMessage());
+		}
 	}
+
+	public Connection getConnection() {
+		return this.connection;
+	}
+
 }
