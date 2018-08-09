@@ -26,8 +26,8 @@ public class TreatmentPlan {
 	public static TreatmentPlan createPlan() {
 		Random random = new Random();
 		
-		DepartmentType diagnosis = DIAGNOSIS[random.nextInt(DIAGNOSIS.length - 1)];
-		String medicament = MEDICAMENTS[random.nextInt(MEDICAMENTS.length - 1)];
+		DepartmentType diagnosis = DIAGNOSIS[random.nextInt(DIAGNOSIS.length)];
+		String medicament = MEDICAMENTS[random.nextInt(MEDICAMENTS.length)];
 		
 		int count = Demo.random(1, 5);
 		HashSet<String> currentMeds = new HashSet<>();
@@ -36,8 +36,19 @@ public class TreatmentPlan {
 			currentMeds.add(medicament);
 		}
 		
-		int period = Demo.random(3, PERIOD + 1);
+//		int period = Demo.random(3, PERIOD + 1);
+		int period = 1;
 		
 		return new TreatmentPlan(diagnosis, currentMeds, period);
+	}
+	
+	public void decrementPeriod() {
+		if (this.period > 0) {
+			this.period--;
+		}
+	}
+	
+	public int getPeriod() {
+		return this.period;
 	}
 }
